@@ -33,6 +33,49 @@ body {
     min-height: 480px;
 }
 
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.container.active .sign-in {
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.container.active .sign-up {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.sign-in,
+.sign-up {
+    position: absolute;
+    width: 100%;
+    transition: all 0.5s ease-in-out;
+}
+
+.sign-in {
+    left: 0;
+}
+
+.sign-up {
+    left: 100%;
+    opacity: 0;
+    visibility: hidden;
+}
+
+
 .container p{
     font-size: 14px;
     line-height: 20px;

@@ -39,7 +39,7 @@
 
     <div class="container" id="container">  
         <div class="form-container sign-up">    <!--Sign up form-->
-            <form>
+            <form action="signup.php" method="POST">
                 <h1>Create Account</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -51,13 +51,13 @@
                 <input type="text" placeholder="Name">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
-                <button>Sign Up</button>
+                <button type= "submit" >Sign Up</button>
             </form>
         </div>
 
 <!--Sign in form-->
         <div class="form-container sign-in">        
-            <form>
+            <form action="signin.php" method="POST">
                 <h1>Sign In</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -69,7 +69,7 @@
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
-                <button>Sign In</button>
+                <button type= "submit" >Sign In</button>
             </form>
         </div>
 
