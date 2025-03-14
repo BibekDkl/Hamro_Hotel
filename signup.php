@@ -1,32 +1,56 @@
 <?php
 include 'connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT); // Encrypt password
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    // Check if email already exists
-    $checkEmail = "SELECT * FROM users WHERE email = ?";
-    $stmt = $conn->prepare($checkEmail);
-    $stmt->bind_param("s", $email);
+    // Validate input
+    if (empty($name) || empty($email) || empty($password)) {
+        header("Location: login.php?error=All fields are required!");
+        exit();
+    }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash password
+
+    // Check if name or email already exists
+    $checkQuery = "SELECT * FROM users WHERE name = ? OR email = ?";
+    $stmt = $conn->prepare($checkQuery);
+
+    if ($stmt === false) {
+        header("Location: login.php?error=Database error: " . urlencode($conn->error));
+        exit();
+    }
+
+    $stmt->bind_param("ss", $name, $email);
     $stmt->execute();
-    $stmt->store_result();
+    $result = $stmt->get_result();
 
-    if ($stmt->num_rows > 0) {
-        echo "Email already registered!";
+    if ($result->num_rows > 0) {
+        header("Location: login.php?error=Name or Email already exists!");
+        exit();
     } else {
-        // Insert user into database
-        $sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $name, $email, $password);
+        // Insert user into the database
+        $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt === false) {
+            header("Location: login.php?error=Database error: " . urlencode($conn->error));
+            exit();
+        }
+
+        $stmt->bind_param("sss", $name, $email, $hashed_password);
 
         if ($stmt->execute()) {
-            echo "Sign-up successful! You can now login.";
+            header("Location: login.php?success=Registration successful! Please login.");
+            exit();
         } else {
-            echo "Error: " . $stmt->error;
+            header("Location: login.php?error=Error: " . urlencode($stmt->error));
+            exit();
         }
     }
+
     $stmt->close();
     $conn->close();
 }

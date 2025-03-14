@@ -33,7 +33,7 @@
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
-                        <li><a class="hvr-underline-from-center" href="login.html">Login</a></li>
+                        <li><a class="hvr-underline-from-center" href="login.php">Register</a></li>
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
@@ -140,14 +140,14 @@
             <form action="" class="form">
                 <fieldset>
                     <legend>Delivery Details</legend>
-                    <p class="label">Full Name</p>
-                    <input type="text" placeholder="Enter your name..." required>
+                    <p class="label" >Full Name</p>
+                    <input type="text" name="name" placeholder="Enter your name..." required >
                     <p class="label">Phone Number</p>
-                    <input type="contact" placeholder="Enter your phone..." required>
+                    <input type="contact" name="phone-number" placeholder="Enter your phone..." required>
                     <p class="label">Email</p>
-                    <input type="email" placeholder="Enter your email..." required>
+                    <input type="email" name="email" placeholder="Enter your email..." required>
                     <p class="label">Address</p>
-                    <input type="text" placeholder="Enter your address..." required>
+                    <input type="text"name="address"  placeholder="Enter your address..." required>
                     <input type="submit" value="Confirm Order" class="btn-primary">
                 </fieldset>
             </form>
@@ -172,7 +172,7 @@
                         <a href="foods.html">Foods</a>
                         <a href="order.html">Order</a>
                         <a href="contact.html">Contact</a>
-                        <a href="login.html">Login</a>
+                        <a href="login.php">Login</a>
                     </div>
                 </div>
                 <div class="social-links">

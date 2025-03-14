@@ -1,16 +1,3 @@
-<?php include('signup.php');
-include('signin.php');
-
-if (isset($_GET['error'])) {
-    echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
-}
-
-if (isset($_GET['success'])) {
-    echo "<p style='color: green;'>" . htmlspecialchars($_GET['success']) . "</p>";
-}
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +30,7 @@ if (isset($_GET['success'])) {
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
+                        <li><a class="hvr-underline-from-center" href="login.html">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -102,8 +90,6 @@ if (isset($_GET['success'])) {
         </div>
     </div>
 </div>
-
-
 
 <script src="js/custom.js"></script>
 <script src="js/login.js"></script>
