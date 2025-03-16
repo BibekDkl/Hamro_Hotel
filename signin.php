@@ -1,41 +1,40 @@
 <?php
 session_start();
-include 'connect.php';
+include 'connect.php'; // Ensure you have a separate file to handle DB connection
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    if (empty($email) || empty($password)) {
-        die("Email and password are required!");
+    // Establish connection
+    $conn = new mysqli($servername, $username, $password);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    // Update the query based on your actual table structure
-    $sql = "SELECT email, password FROM users WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Error preparing query: " . $conn->error);
-    }
-
+    // Prepare SQL statement to prevent SQL Injection
+    $stmt = $conn->prepare("SELECT id, Name, Password FROM users WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->store_result();
+    
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $name, $hashed_password);
+        $stmt->fetch();
 
-    if ($row = $result->fetch_assoc()) {
-        if (password_verify($password, $row['password'])) {
-            // Store user details in session
-             $_SESSION['email'] = $row['email'];
-             $_SESSION['password'] = $row['password'];
-
-            echo "Login successful! Welcome, " . $_SESSION['user_name'];
-            header("Location: index.php"); // Redirect to home page
+        // Verify password
+        if (password_verify($password, $hashed_password)) {
+            $_SESSION['user_id'] = $id;
+            $_SESSION['user_name'] = $name;
+            header("Location: index.html"); // Redirect to the dashboard after successful login
             exit();
         } else {
-            echo "Incorrect password!";
+            echo "Invalid email or password.";
         }
     } else {
-        echo "No account found with this email!";
+        echo "Invalid email or password.";
     }
 
     $stmt->close();
