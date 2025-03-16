@@ -1,3 +1,8 @@
+<?php
+session_start(); // Start the session
+$isLoggedIn = isset($_SESSION['email']); // Check if the user is logged in
+$username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (or name if stored)
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,19 +26,24 @@
             <div class="container">
                 <!-- logo -->
                 <div class="logo">
-                    <a href="index.html" title="Logo">
+                    <a href="index.php" title="Logo">
                         <img src="Image.src/logo.png" alt="Logo" class="img-responsive">
                     </a>
                 </div>
                 <!-- Main Menu -->
                 <div class="menu text-right">
                     <ul>
-                        <li><a class="hvr-underline-from-center" href="index.html">Home</a></li>
+                        <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
-                        <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
-                        <li><a class="hvr-underline-from-center" href="login.php">Register</a></li>
+                        <li><a class="hvr-underline-from-center" href="login.php">Contact</a></li>
+                        <?php if ($isLoggedIn): ?>
+                            <li><a class="hvr-underline-from-center" href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
+                            <li><a class="hvr-underline-from-center" href="logout.php">Logout</a></li>
+                        <?php else: ?>
+                            <li><a class="hvr-underline-from-center" href="login.php">Register</a></li>
+                        <?php endif; ?>
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
@@ -41,7 +51,7 @@
                             </a>
                             <div id="cart-content" class="cart-content">
                                 <h3 class="text-center">Shopping Cart</h3>
-                                <table class="cart-table" >
+                                <table class="cart-table">
                                     <tr>
                                         <th>Food</th>
                                         <th>Name</th>
@@ -90,8 +100,9 @@
     </header>
     <!-- Navigation Section End -->
 
+    <!-- Rest of your HTML content remains the same -->
     <!-- Food Search Section Start -->
-    <section class="food-search text-center" >
+    <section class="food-search text-center">
         <div class="container">
             <form action="food-search.html">
                 <input type="search" placeholder="Search for food..." required>
@@ -112,22 +123,19 @@
                     <div class="float-container">
                         <img src="img/category/pizza.jpg" class="img-responsive" alt="">
                     </div>
-                    <h4 style="margin: 4px 0 0 0;">Pizza</h5>
-                       
+                    <h4 style="margin: 4px 0 0 0;">Pizza</h4>
                 </a>
                 <a href="category-foods.html">
                     <div class="float-container">
                         <img src="img/category/sandwich.jpg" class="img-responsive" alt="">
-                        
                     </div>
-                    <h4 style="margin: 4px 0 0 0;">Sandwich</h5>
+                    <h4 style="margin: 4px 0 0 0;">Sandwich</h4>
                 </a>
                 <a href="category-foods.html">
                     <div class="float-container">
                         <img src="Image.src/drive-download-20250216T024959Z-001/Burgeer4.jpg" class="img-responsive" alt="">
-                        
                     </div>
-                    <h4 style="margin: 4px 0 0 0;">Burger</h5>
+                    <h4 style="margin: 4px 0 0 0;">Burger</h4>
                 </a>
             </div>
         </div>
@@ -182,48 +190,6 @@
                         </div>
                     </form>
                 </div>
-                <!-- <div class="food-menu-box">
-                    <form action="">
-                        <div class="food-menu-img">
-                            <img src="img/food/p1.jpg" alt="" class="img-responsive img-curve">
-                        </div>
-                        <div class="food-menu-desc">
-                            <h4>Pizza</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
-                            <input type="number" value="1" min="1">
-                            <input type="submit" class="btn-primary" value="Add To Cart">
-                        </div>
-                    </form>
-                </div>
-                <div class="food-menu-box">
-                    <form action="">
-                        <div class="food-menu-img">
-                            <img src="img/food/s1.jpg" alt="" class="img-responsive img-curve">
-                        </div>
-                        <div class="food-menu-desc">
-                            <h4>Sandwich</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
-                            <input type="number" value="1" min="1">
-                            <input type="submit" class="btn-primary" value="Add To Cart">
-                        </div>
-                    </form>
-                </div>
-                <div class="food-menu-box">
-                    <form action="">
-                        <div class="food-menu-img">
-                            <img src="img/food/b1.jpg" alt="" class="img-responsive img-curve">
-                        </div>
-                        <div class="food-menu-desc">
-                            <h4>Burger</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
-                            <input type="number" value="1" min="1">
-                            <input type="submit" class="btn-primary" value="Add To Cart">
-                        </div>
-                    </form>
-                </div> -->
             </div>
         </div>
         <p class="text-center">
@@ -286,6 +252,5 @@
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
-
 </body>
 </html>

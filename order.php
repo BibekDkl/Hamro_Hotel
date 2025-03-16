@@ -1,3 +1,6 @@
+<?php 
+include('Take_order.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +31,7 @@
                 <!-- Main Menu -->
                 <div class="menu text-right">
                     <ul>
-                        <li><a class="hvr-underline-from-center" href="index.html">Home</a></li>
+                        <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>

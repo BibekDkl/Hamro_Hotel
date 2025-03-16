@@ -1,17 +1,20 @@
-<?php include('signup.php');
+<?php 
+include('signup.php');
 include('signin.php');
 
-if (isset($_GET['error'])) {
-    echo "<p style='color: red;'>" . htmlspecialchars($_GET['error']) . "</p>";
+
+// Display success message if set
+if (isset($_SESSION['success'])) {
+    echo "<p style='color:green;'>" . $_SESSION['success'] . "</p>";
+    unset($_SESSION['success']); // Clear the message after displaying it
 }
 
-if (isset($_GET['success'])) {
-    echo "<p style='color: green;'>" . htmlspecialchars($_GET['success']) . "</p>";
+// Display error message if set
+if (isset($_SESSION['error'])) {
+    echo "<p style='color:red;'>" . $_SESSION['error'] . "</p>";
+    unset($_SESSION['error']); // Clear the message after displaying it
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,14 +34,14 @@ if (isset($_GET['success'])) {
             <div class="containers">
                 <!-- logo -->
                 <div class="logo">
-                    <a href="index.html" title="Logo">
+                    <a href="index.php" title="Logo">
                         <img src="Image.src/logo.png" alt="Logo" class="img-responsive">
                     </a>
                 </div>
                 <!-- Main Menu -->
                 <div class="menu text-right">
                     <ul>
-                        <li><a class="hvr-underline-from-center" href="index.html">Home</a></li>
+                        <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
@@ -61,9 +64,9 @@ if (isset($_GET['success'])) {
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email for registeration</span>
-                <input type="text" placeholder="Name" name="name">
-                <input type="email" placeholder="Email" name="email">
-                <input type="password" placeholder="Password" name="password">
+                <input type="text" placeholder="Name" id= "namel" name="name">
+                <input type="email" placeholder="Email" id= "email" name="email">
+                <input type="password" placeholder="Password" id= "password" name="password">
                 <button type= "submit" >Sign Up</button>
             </form>
         </div>
@@ -79,8 +82,8 @@ if (isset($_GET['success'])) {
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span>or use your email password</span>
-                <input type="email" placeholder="Email" name="email">
-                <input type="password" placeholder="Password" name="password">
+                <input type="email" placeholder="Email" id= "email2" name="email2">
+                <input type="password" placeholder="Password" id= "password2" name="password2">
                 <a href="#">Forget Your Password?</a>
                 <button type= "submit" >Sign In</button>
             </form>

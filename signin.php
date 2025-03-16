@@ -1,43 +1,63 @@
 <?php
 session_start();
-include 'connect.php'; // Ensure you have a separate file to handle DB connection
+include 'connect.php'; // Include database connection
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    // Establish connection
-    $conn = new mysqli($servername, $username, $password);
+$errors = array(); // Array to store errors
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email2']) && isset($_POST['password2'])) {
+    // Check if email and password are received
+    if (empty($_POST['email2'])) {
+        array_push($errors, "Email is required");
     }
-
-    // Prepare SQL statement to prevent SQL Injection
-    $stmt = $conn->prepare("SELECT id, Name, Password FROM users WHERE Email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    if (empty($_POST['password2'])) {
+        array_push($errors, "Password is required");
+    }
     
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $name, $hashed_password);
-        $stmt->fetch();
+    if (count($errors) == 0) {
+        // Get and sanitize user input
+        $email = mysqli_real_escape_string($conn, $_POST['email2']);
+        $password = mysqli_real_escape_string($conn, $_POST['password2']);
 
-        // Verify password
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['user_id'] = $id;
-            $_SESSION['user_name'] = $name;
-            header("Location: index.html"); // Redirect to the dashboard after successful login
-            exit();
-        } else {
-            echo "Invalid email or password.";
+        // Prepare SQL query to check user existence
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        if ($stmt === false) {
+            die("Database query failed: " . $conn->error);
         }
-    } else {
-        echo "Invalid email or password.";
-    }
 
-    $stmt->close();
-    $conn->close();
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows == 1) {
+            $user = $result->fetch_assoc();
+            
+            // Verify hashed password
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['email'] = $email;
+                $_SESSION['success'] = "You are now logged in";
+                header("Location: index.php"); // Redirect to home page
+                exit();
+            } else {
+                array_push($errors, "Wrong email/password combination");
+            }
+        } else {
+            array_push($errors, "User not found");
+        }
+        
+        $stmt->close();
+    }
+    
+    // Store errors in session and redirect back to login page
+    if (count($errors) > 0) {
+        $_SESSION['error'] = implode("<br>", $errors);
+        header("Location: login.php");
+        exit();
+    }
 }
+
+$conn->close();
 ?>

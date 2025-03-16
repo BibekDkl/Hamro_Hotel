@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->bind_param("sss", $name, $email, $password);
                 if ($stmt->execute()) {
                     header("Location: login.php");
-                    exit();;
+                    exit();
                 } else {
                     $message = "Error: " . $stmt->error;
                 }
@@ -45,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $stmt->close();
     echo $message;
-    $conn->close();
+$conn->close();
+   
     
 }
+
 ?>
