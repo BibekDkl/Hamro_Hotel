@@ -118,8 +118,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Pizza</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 400</p>
+                            <p class="food-details">A delicious, cheesy pepperoni pizza with a crispy crust, topped with fresh tomato sauce and melted 
+                            mozzarella cheese. Perfect for pizza lovers.</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -132,8 +133,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Sandwich</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 200</p>
+                            <p class="food-details">A crispy grilled sandwich filled with fresh vegetables, cheese, and a flavorful sauce, served with a side of crunchy potato chips. 
+                            Great for a quick and tasty bite!</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -146,8 +148,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Burger</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 300</p>
+                            <p class="food-details">A juicy grilled chicken burger with fresh lettuce, tomatoes, and a special house sauce, 
+                            served in a soft sesame seed bun. A perfect choice for a satisfying meal.</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -160,8 +163,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Pizza</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 400</p>
+                            <p class="food-details">A delicious, cheesy pepperoni pizza with a crispy crust, topped with fresh tomato sauce and melted 
+                            mozzarella cheese. Perfect for pizza lovers.</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -174,8 +178,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Sandwich</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 200</p>
+                            <p class="food-details">A crispy grilled sandwich filled with fresh vegetables, cheese, and a flavorful sauce, served with a side of crunchy potato chips. 
+                            Great for a quick and tasty bite!</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -188,8 +193,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         </div>
                         <div class="food-menu-desc">
                             <h4>Burger</h4>
-                            <p class="food-price">$8.00</p>
-                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <p class="food-price">Rs. 300</p>
+                            <p class="food-details">A juicy grilled chicken burger with fresh lettuce, tomatoes, and a special house sauce, 
+                            served in a soft sesame seed bun. A perfect choice for a satisfying meal.</p>
                             <input type="number" value="1" min="1">
                             <input type="submit" class="btn-primary" value="Add To Cart">
                         </div>
@@ -219,7 +225,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         <a href="categories.html">Categories</a>
                         <a href="foods.html">Foods</a>
                         <a href="order.php">Order</a>
-                        <a href="contact.html">Contact</a>
+                        <a href="contact.php">Contact</a>
                         <a href="login.php">Register</a>
                     </div>
                 </div>

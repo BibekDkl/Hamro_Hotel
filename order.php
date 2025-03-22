@@ -27,7 +27,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
             <div class="container">
                 <!-- logo -->
                 <div class="logo">
-                    <a href="index.html" title="Logo">
+                    <a href="index.php" title="Logo">
                         <img src="Image.src/logo.png" alt="Logo" class="img-responsive">
                     </a>
                 </div>
@@ -37,8 +37,8 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                         <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
-                        <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
-                        <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
+                        <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
+                        <li><a class="hvr-underline-from-center" href="contact.php">Contact</a></li>
                         <?php if ($isLoggedIn): ?>
         <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
         <li><a href="logout.php">Logout</a></li>
@@ -206,7 +206,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
     <!-- Copyright Section start -->
     <section class="copyright">
         <div class="container text-center">
-            <p>All rights reserved. Design By <a href="#">Code Arcade</a></p>
+            <p>All rights reserved. Design By <a href="index.php">Foodie Fly</a></p>
         </div>
         <a id="back-to-top" class="btn-primary">
             <i class="fa fa-angle-double-up"></i>

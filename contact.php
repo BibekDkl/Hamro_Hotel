@@ -28,7 +28,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
             <div class="container">
                 <!-- logo -->
                 <div class="logo">
-                    <a href="index.html" title="Logo">
+                    <a href="index.php" title="Logo">
                         <img src="Image.src/logo.png" alt="Logo" class="img-responsive">
                     </a>
                 </div>
@@ -151,9 +151,9 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                     <div class="site-links">
                         <a href="categories.html">Categories</a>
                         <a href="foods.html">Foods</a>
-                        <a href="order.html">Order</a>
-                        <a href="contact.html">Contact</a>
-                        <a href="login.html">Login</a>
+                        <a href="order.php">Order</a>
+                        <a href="contact.php">Contact</a>
+                        <a href="login.php">Login</a>
                     </div>
                 </div>
                 <div class="social-links">
