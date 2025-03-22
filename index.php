@@ -47,13 +47,13 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
-                                <span class="badge">4</span>
+                                <span class="badge"></span>
                             </a>
                             <div id="cart-content" class="cart-content">
                                 <h3 class="text-center">Shopping Cart</h3>
                                 <table class="cart-table">
                                 </table>
-                                <a href="order.html" class="btn-primary">Confirm Order</a>
+                                <a href="order.php" class="btn-primary">Confirm Order</a>
                             </div>
                         </li>
                     </ul>
@@ -218,7 +218,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                     <div class="site-links">
                         <a href="categories.html">Categories</a>
                         <a href="foods.html">Foods</a>
-                        <a href="order.html">Order</a>
+                        <a href="order.php">Order</a>
                         <a href="contact.html">Contact</a>
                         <a href="login.php">Register</a>
                     </div>

@@ -41,7 +41,10 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['email'] = $email;
     $_SESSION['name'] = $user['name']; // Store the user's name in session
     $_SESSION['success'] = "You are now logged in";
-    header("Location: index.php");
+    echo "<script>
+        alert('You are now logged in..');
+        window.location.href = 'index.php';
+    </script>";
     exit();
 }
 

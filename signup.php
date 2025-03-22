@@ -33,7 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $stmt->bind_param("sss", $name, $email, $password);
                 if ($stmt->execute()) {
-                    header("Location: login.php");
+                    echo "<script>
+        alert('You are now registered, Please! Login...');
+        window.location.href = 'login.php';
+    </script>";
                     exit();
                 } else {
                     $message = "Error: " . $stmt->error;

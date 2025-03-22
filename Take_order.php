@@ -1,26 +1,40 @@
 <?php
-include 'connect.php';
-// Collect form data
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $phone_number = $_POST['phone-number'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    
-    // Assuming food items and price are static for now, you can modify as per your dynamic cart
-    $food_items = "Pizza, Sandwich, Burger"; // Static example; ideally it would come from the cart
-    $total_price = 24.00; // Static example; ideally it would come from the cart
+session_start(); // ✅ Start session
+include('connect.php'); 
 
-    // Insert the data into the orders table
-    $sql = "INSERT INTO orders (name, phone_number, email, address, food_items, total_price) 
-            VALUES ('$name', '$phone_number', '$email', '$address', '$food_items', '$total_price')";
+// Check if user is logged in
+if (!isset($_SESSION['name'])) {
+    echo "<script>
+        alert('Please log in to place an order.');
+        window.location.href = 'login.php';
+    </script>";
+    exit(); // ✅ Stop further execution
+}
+
+// Get form data
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = mysqli_real_escape_string($conn, $_POST['name2']);
+    $phone_number = mysqli_real_escape_string($conn, $_POST['phone_number']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $address = mysqli_real_escape_string($conn, $_POST['address']);
+
+    // ✅ Insert into database (correct table columns)
+    $sql = "INSERT INTO orders (name, phone_number, email, address) 
+            VALUES ('$name', '$phone_number', '$email', '$address')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Order placed successfully!";
+        echo "<script>
+            alert('Order placed successfully!');
+            window.location.href = 'index.php';
+        </script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>
+            alert('Error: " . $conn->error . "');
+            window.location.href = 'order.php';
+        </script>";
     }
 }
 
+// ✅ Close connection
 $conn->close();
 ?>

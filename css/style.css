@@ -451,3 +451,21 @@ background-image: url(../img/search-bg.jpg);
   border: none;
 }
 /* Contact Page Style End */
+.button{
+  background-color: #2E4053;
+  color: #F9E267;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.button.hidden{
+  background-color: transparent;
+  border-color: #F9E267;
+}

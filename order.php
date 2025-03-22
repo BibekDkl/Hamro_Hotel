@@ -1,5 +1,4 @@
 <?php 
-include('Take_order.php');
 session_start(); // Start the session
 $isLoggedIn = isset($_SESSION['email']); // Check if user is logged in
 $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
@@ -149,18 +148,18 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                     <th></th>
                 </tr>
             </table>
-            <form action="" class="form">
+            <form action="Take_order.php" method="POST" class="form">
                 <fieldset>
                     <legend>Delivery Details</legend>
                     <p class="label" >Full Name</p>
-                    <input type="text" name="name" placeholder="Enter your name..." required >
+                    <input type="text" name="name2" id ="name2" placeholder="Enter your name..." required >
                     <p class="label">Phone Number</p>
-                    <input type="contact" name="phone-number" placeholder="Enter your phone..." required>
+                    <input type="text" name="phone_number" id ="phone-number" placeholder="Enter your phone..." required>
                     <p class="label">Email</p>
-                    <input type="email" name="email" placeholder="Enter your email..." required>
+                    <input type="text" name="email" id ="email" placeholder="Enter your email..." required>
                     <p class="label">Address</p>
-                    <input type="text"name="address"  placeholder="Enter your address..." required>
-                    <input type="submit" value="Confirm Order" class="btn-primary">
+                    <input type="text"name="address" id ="address" placeholder="Enter your address..." required>
+                    <button type= "submit" >Conform Order</button>
                 </fieldset>
             </form>
         </div>
