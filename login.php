@@ -43,7 +43,7 @@ if (isset($_SESSION['error'])) {
                     <ul>
                         <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
-                        <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
+                        <li><a class="hvr-underline-from-center" href="foods.php">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.php">Contact</a></li>
                     </ul>

@@ -1,9 +1,51 @@
-<?php 
+<?php
 session_start(); // Start the session
-$isLoggedIn = isset($_SESSION['email']); // Check if user is logged in
-$username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
 
+// Initialize the cart if it doesn't exist
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Function to add an item to the cart
+function addToCart($itemId, $quantity, $name, $price) {
+    if (isset($_SESSION['cart'][$itemId])) {
+        $_SESSION['cart'][$itemId]['quantity'] += $quantity;
+    } else {
+        $_SESSION['cart'][$itemId] = [
+            'name' => $name,
+            'price' => $price,
+            'quantity' => $quantity
+        ];
+    }
+}
+
+// Function to remove an item from the cart
+function removeFromCart($itemId) {
+    if (isset($_SESSION['cart'][$itemId])) {
+        unset($_SESSION['cart'][$itemId]);
+    }
+}
+
+// Handle add to cart request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+    $itemId = $_POST['item_id'];
+    $quantity = $_POST['quantity'];
+    $name = $_POST['item_name'];
+    $price = $_POST['item_price'];
+    addToCart($itemId, $quantity, $name, $price);
+}
+
+// Handle remove from cart request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) {
+    $itemId = $_POST['item_id'];
+    removeFromCart($itemId);
+}
+
+// Check if the user is logged in
+$isLoggedIn = isset($_SESSION['email']);
+$username = $isLoggedIn ? $_SESSION['name'] : '';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,19 +78,19 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                     <ul>
                         <li><a class="hvr-underline-from-center" href="index.php">Home</a></li>
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
-                        <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
+                        <li><a class="hvr-underline-from-center" href="foods.php">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.php">Contact</a></li>
                         <?php if ($isLoggedIn): ?>
-        <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
-        <li><a href="logout.php">Logout</a></li>
-    <?php else: ?>
-        <li><a href="login.php">Login</a></li>
-    <?php endif; ?>
+                            <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
+                            <li><a href="logout.php">Logout</a></li>
+                        <?php else: ?>
+                            <li><a href="login.php">Register</a></li>
+                        <?php endif; ?>
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
-                                <span class="badge">4</span>
+                                <span class="badge"><?php echo count($_SESSION['cart']); ?></span>
                             </a>
                             <div id="cart-content" class="cart-content">
                                 <h3 class="text-center">Shopping Cart</h3>
@@ -61,37 +103,26 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                                         <th>Total</th>
                                         <th>Action</th>
                                     </tr>
-                                    <tr>
-                                        <td><img src="img/food/p1.jpg" alt="Food"></td>
-                                        <td>Pizza</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="img/food/s1.jpg" alt="Food"></td>
-                                        <td>Sandwich</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="img/food/b1.jpg" alt="Food"></td>
-                                        <td>Burder</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4">Total</th>
-                                        <th>$24.00$</th>
-                                        <th></th>
-                                    </tr>
+                                    <div id="cart-content" class="cart-content">
+                                        <h3 class="text-center">Shopping Cart</h3>
+                                        <table class="cart-table">
+                                            <?php foreach ($_SESSION['cart'] as $itemId => $item): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($item['name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($item['quantity']); ?></td>
+                                                    <td>Rs. <?php echo htmlspecialchars($item['price'] * $item['quantity']); ?></td>
+                                                    <td>
+                                                        <form action="" method="post" style="display:inline;">
+                                                            <input type="hidden" name="item_id" value="<?php echo $itemId; ?>">
+                                                            <button type="submit" name="remove_from_cart" class="btn-primary">Remove</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </table>
+                                        <a href="order.php" class="btn-primary">Confirm Order</a>
+                                    </div>
                                 </table>
-                                <a href="order.html" class="btn-primary">Confirm Order</a>
                             </div>
                         </li>
                     </ul>
@@ -115,51 +146,46 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                     <th>Total</th>
                     <th>Action</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td><img src="img/food/p1.jpg" alt="Food"></td>
-                    <td>Pizza</td>
-                    <td>$ 8.00</td>
-                    <td>1</td>
-                    <td>$ 8.00</td>
-                    <td><a href="#" class="btn-delete">&times;</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><img src="img/food/s1.jpg" alt="Food"></td>
-                    <td>Sandwich</td>
-                    <td>$ 8.00</td>
-                    <td>1</td>
-                    <td>$ 8.00</td>
-                    <td><a href="#" class="btn-delete">&times;</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><img src="img/food/b1.jpg" alt="Food"></td>
-                    <td>Burder</td>
-                    <td>$ 8.00</td>
-                    <td>1</td>
-                    <td>$ 8.00</td>
-                    <td><a href="#" class="btn-delete">&times;</a></td>
-                </tr>
+                <?php
+                $sn = 1;
+                $total = 0;
+                foreach ($_SESSION['cart'] as $itemId => $item):
+                    $itemTotal = $item['price'] * $item['quantity'];
+                    $total += $itemTotal;
+                ?>
+                    <tr>
+                        <td><?php echo $sn++; ?></td>
+                        <td><img src="img/food/<?php echo strtolower($item['name']) . '.jpg'; ?>" alt="Food"></td>
+                        <td><?php echo htmlspecialchars($item['name']); ?></td>
+                        <td>Rs. <?php echo htmlspecialchars($item['price']); ?></td>
+                        <td><?php echo htmlspecialchars($item['quantity']); ?></td>
+                        <td>Rs. <?php echo htmlspecialchars($itemTotal); ?></td>
+                        <td>
+                            <form action="" method="post" style="display:inline;">
+                                <input type="hidden" name="item_id" value="<?php echo $itemId; ?>">
+                                <button type="submit" name="remove_from_cart" class="btn-delete">&times;</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 <tr>
                     <th colspan="5">Total</th>
-                    <th>$24.00</th>
+                    <th>Rs. <?php echo htmlspecialchars($total); ?></th>
                     <th></th>
                 </tr>
             </table>
             <form action="Take_order.php" method="POST" class="form">
                 <fieldset>
                     <legend>Delivery Details</legend>
-                    <p class="label" >Full Name</p>
-                    <input type="text" name="name2" id ="name2" placeholder="Enter your name..." required >
+                    <p class="label">Full Name</p>
+                    <input type="text" name="name2" id="name2" placeholder="Enter your name..." required>
                     <p class="label">Phone Number</p>
-                    <input type="text" name="phone_number" id ="phone-number" placeholder="Enter your phone..." required>
+                    <input type="text" name="phone_number" id="phone-number" placeholder="Enter your phone..." required>
                     <p class="label">Email</p>
-                    <input type="text" name="email" id ="email" placeholder="Enter your email..." required>
+                    <input type="text" name="email" id="email" placeholder="Enter your email..." required>
                     <p class="label">Address</p>
-                    <input type="text"name="address" id ="address" placeholder="Enter your address..." required>
-                    <button type= "submit" class="btn-primary" >Conform Order</button>
+                    <input type="text" name="address" id="address" placeholder="Enter your address..." required>
+                    <button type="submit" class="btn-primary">Confirm Order</button>
                 </fieldset>
             </form>
         </div>
@@ -172,17 +198,15 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
             <div class="grid-3">
                 <div class="text-center">
                     <h3>About Us</h3><br>
-                    <p>Foodie Fly is a fast and reliable food delivery service connecting you with top restaurants for a seamless dining experience. 
-                        With a diverse menu, real-time tracking, and swift deliveries, we ensure your favorite meals arrive fresh and on time. 
-                        Enjoy convenience at your fingertips—because great food should never wait! </p>
+                    <p>Foodie Fly is a fast and reliable food delivery service connecting you with top restaurants for a seamless dining experience.</p>
                 </div>
-                <div class="texr-center">
+                <div class="text-center">
                     <h3>Site Map</h3><br>
                     <div class="site-links">
                         <a href="categories.html">Categories</a>
                         <a href="foods.html">Foods</a>
-                        <a href="order.html">Order</a>
-                        <a href="contact.html">Contact</a>
+                        <a href="order.php">Order</a>
+                        <a href="contact.php">Contact</a>
                         <a href="login.php">Login</a>
                     </div>
                 </div>
@@ -216,8 +240,6 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <!-- Jquery UI -->
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <!-- Custom JS -->
     <script src="js/custom.js"></script>
 </body>

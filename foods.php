@@ -39,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_from_cart'])) {
     $itemId = $_POST['item_id'];
     removeFromCart($itemId);
+    // Redirect to the same page to refresh the cart
+    header("Location: index.php");
+    exit();
 }
 
 // Check if the user is logged in
@@ -82,17 +85,55 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.php">Contact</a></li>
                         <?php if ($isLoggedIn): ?>
-                            <li><a class="hvr-underline-from-center" href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
-                            <li><a class="hvr-underline-from-center" href="logout.php">Logout</a></li>
+                            <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
+                            <li><a href="logout.php">Logout</a></li>
                         <?php else: ?>
-                            <li><a class="hvr-underline-from-center" href="login.php">Register</a></li>
+                            <li><a href="login.php">Login</a></li>
                         <?php endif; ?>
                         <li>
-                            <!-- Cart Icon with Badge -->
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
                                 <span class="badge"><?php echo count($_SESSION['cart']); ?></span>
                             </a>
+                            <div id="cart-content" class="cart-content">
+                                <h3 class="text-center">Shopping Cart</h3>
+                                <table class="cart-table" border="0">
+                                    <tr>
+                                        <th>Food</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    <?php
+                                    $total = 0;
+                                    foreach ($_SESSION['cart'] as $itemId => $item):
+                                        $itemTotal = $item['price'] * $item['quantity'];
+                                        $total += $itemTotal;
+                                    ?>
+                                        <tr>
+                                            <td><img src="img/food/<?php echo strtolower($item['name']) . '.jpg'; ?>" alt="Food"></td>
+                                            <td><?php echo htmlspecialchars($item['name']); ?></td>
+                                            <td>$ <?php echo htmlspecialchars($item['price']); ?></td>
+                                            <td><?php echo htmlspecialchars($item['quantity']); ?></td>
+                                            <td>$ <?php echo htmlspecialchars($itemTotal); ?></td>
+                                            <td>
+                                                <form action="" method="post" style="display:inline;">
+                                                    <input type="hidden" name="item_id" value="<?php echo $itemId; ?>">
+                                                    <button type="submit" name="remove_from_cart" class="btn-delete">&times;</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <th colspan="4">Total</th>
+                                        <th>$ <?php echo htmlspecialchars($total); ?></th>
+                                        <th></th>
+                                    </tr>
+                                </table>
+                                <a href="order.php" class="btn-primary">Confirm Order</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -101,31 +142,10 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
     </header>
     <!-- Navigation Section End -->
 
-    <!-- Cart Section -->
-    <div id="cart-content" class="cart-content">
-        <h3 class="text-center">Shopping Cart</h3>
-        <table class="cart-table">
-            <?php foreach ($_SESSION['cart'] as $itemId => $item): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($item['name']); ?></td>
-                    <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-                    <td>Rs. <?php echo htmlspecialchars($item['price'] * $item['quantity']); ?></td>
-                    <td>
-                        <form action="" method="post" style="display:inline;">
-                            <input type="hidden" name="item_id" value="<?php echo $itemId; ?>">
-                            <button type="submit" name="remove_from_cart" class="btn-primary">Remove</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-        <a href="order.php" class="btn-primary">Confirm Order</a>
-    </div>
-
     <!-- Food Search Section Start -->
     <section class="food-search text-center">
         <div class="container">
-            <form action="food-search.html">
+            <form action="">
                 <input type="search" placeholder="Search for food..." required>
                 <input type="submit" value="Search" class="btn-primary">
             </form>
@@ -148,30 +168,11 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
                         <div class="food-menu-desc">
                             <h4>Pizza</h4>
                             <p class="food-price">Rs. 400</p>
-                            <p class="food-details">A delicious, cheesy pepperoni pizza with a crispy crust...</p>
+                            <p class="food-details">A delicious, cheesy pepperoni pizza with a crispy crust, topped with fresh tomato sauce and melted mozzarella cheese. Perfect for pizza lovers.</p>
                             <input type="number" name="quantity" value="1" min="1">
                             <input type="hidden" name="item_id" value="pizza_1">
                             <input type="hidden" name="item_name" value="Pizza">
                             <input type="hidden" name="item_price" value="400">
-                            <input type="submit" name="add_to_cart" class="btn-primary" value="Add To Cart">
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Sandwich -->
-                <div class="food-menu-box">
-                    <form action="" method="post">
-                        <div class="food-menu-img">
-                            <img src="img/food/s1.jpg" alt="" class="img-responsive img-curve">
-                        </div>
-                        <div class="food-menu-desc">
-                            <h4>Sandwich</h4>
-                            <p class="food-price">Rs. 200</p>
-                            <p class="food-details">A crispy grilled sandwich filled with fresh vegetables, cheese, and a flavorful sauce...</p>
-                            <input type="number" name="quantity" value="1" min="1">
-                            <input type="hidden" name="item_id" value="sandwich_1">
-                            <input type="hidden" name="item_name" value="Sandwich">
-                            <input type="hidden" name="item_price" value="200">
                             <input type="submit" name="add_to_cart" class="btn-primary" value="Add To Cart">
                         </div>
                     </form>
@@ -186,11 +187,30 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
                         <div class="food-menu-desc">
                             <h4>Burger</h4>
                             <p class="food-price">Rs. 300</p>
-                            <p class="food-details">A juicy grilled chicken burger with fresh lettuce, tomatoes, and a special house sauce...</p>
+                            <p class="food-details">A juicy grilled chicken burger with fresh lettuce, tomatoes, and a special house sauce, served in a soft sesame seed bun. A perfect choice for a satisfying meal.</p>
                             <input type="number" name="quantity" value="1" min="1">
                             <input type="hidden" name="item_id" value="burger_1">
                             <input type="hidden" name="item_name" value="Burger">
                             <input type="hidden" name="item_price" value="300">
+                            <input type="submit" name="add_to_cart" class="btn-primary" value="Add To Cart">
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Sandwich -->
+                <div class="food-menu-box">
+                    <form action="" method="post">
+                        <div class="food-menu-img">
+                            <img src="img/food/s1.jpg" alt="" class="img-responsive img-curve">
+                        </div>
+                        <div class="food-menu-desc">
+                            <h4>Sandwich</h4>
+                            <p class="food-price">Rs. 200</p>
+                            <p class="food-details">A crispy grilled sandwich filled with fresh vegetables, cheese, and a flavorful sauce, served with a side of crunchy potato chips. Great for a quick and tasty bite!</p>
+                            <input type="number" name="quantity" value="1" min="1">
+                            <input type="hidden" name="item_id" value="sandwich_1">
+                            <input type="hidden" name="item_name" value="Sandwich">
+                            <input type="hidden" name="item_price" value="200">
                             <input type="submit" name="add_to_cart" class="btn-primary" value="Add To Cart">
                         </div>
                     </form>
@@ -215,18 +235,18 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
                         <a href="foods.html">Foods</a>
                         <a href="order.php">Order</a>
                         <a href="contact.php">Contact</a>
-                        <a href="login.php">Register</a>
+                        <a href="login.php">Login</a>
                     </div>
                 </div>
                 <div class="social-links">
                     <h3>Social Links</h3><br>
                     <div class="social">
                         <ul>
-                            <li><a href=""><img src="https://img.icons8.com/color/48/null/facebook-new.png"/></a></li>
-                            <li><a href=""><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/></a></li>
-                            <li><a href=""><img src="https://img.icons8.com/color/48/null/twitter--v1.png"/></a></li>
-                            <li><a href=""><img src="https://img.icons8.com/color/48/null/linkedin-circled--v1.png"/></a></li>
-                            <li><a href=""><img src="https://img.icons8.com/color/48/null/youtube-play.png"/></a></li>
+                            <li><a href="#"><img src="https://img.icons8.com/color/48/null/facebook-new.png"/></a></li>
+                            <li><a href="#"><img src="https://img.icons8.com/fluency/48/null/instagram-new.png"/></a></li>
+                            <li><a href="#"><img src="https://img.icons8.com/color/48/null/twitter--v1.png"/></a></li>
+                            <li><a href="#"><img src="https://img.icons8.com/color/48/null/linkedin-circled--v1.png"/></a></li>
+                            <li><a href="#"><img src="https://img.icons8.com/color/48/null/youtube-play.png"/></a></li>
                         </ul>
                     </div>
                 </div>
@@ -238,7 +258,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : '';
     <!-- Copyright Section start -->
     <section class="copyright">
         <div class="container text-center">
-            <p>All rights reserved. Design By <a href="#">Foodie Fly</a></p>
+            <p>All rights reserved. Design By <a href="index.php">Foodie Fly</a></p>
         </div>
         <a id="back-to-top" class="btn-primary">
             <i class="fa fa-angle-double-up"></i>
