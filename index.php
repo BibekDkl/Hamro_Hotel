@@ -37,7 +37,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
-                        <li><a class="hvr-underline-from-center" href="login.php">Contact</a></li>
+                        <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
                         <?php if ($isLoggedIn): ?>
                             <li><a class="hvr-underline-from-center" href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
                             <li><a class="hvr-underline-from-center" href="logout.php">Logout</a></li>
@@ -52,43 +52,6 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                             <div id="cart-content" class="cart-content">
                                 <h3 class="text-center">Shopping Cart</h3>
                                 <table class="cart-table">
-                                    <tr>
-                                        <th>Food</th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>Total</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="img/food/p1.jpg" alt="Food"></td>
-                                        <td>Pizza</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="img/food/s1.jpg" alt="Food"></td>
-                                        <td>Sandwich</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><img src="Image.src/drive-download-20250216T024959Z-001/Burgeer4.jpg" alt="Food"></td>
-                                        <td>Burder</td>
-                                        <td>$ 8.00</td>
-                                        <td>1</td>
-                                        <td>$ 8.00</td>
-                                        <td><a href="#" class="btn-delete">&times;</a></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4">Total</th>
-                                        <th>$24.00$</th>
-                                        <th></th>
-                                    </tr>
                                 </table>
                                 <a href="order.html" class="btn-primary">Confirm Order</a>
                             </div>
@@ -148,6 +111,48 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
             <h2 class="text-center">Food Menu</h2>
             <div class="heading-border"></div>
             <div class="grid-2">
+                <div class="food-menu-box">
+                    <form action="">
+                        <div class="food-menu-img">
+                            <img src="img/food/p1.jpg" alt="" class="img-responsive img-curve">
+                        </div>
+                        <div class="food-menu-desc">
+                            <h4>Pizza</h4>
+                            <p class="food-price">$8.00</p>
+                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <input type="number" value="1" min="1">
+                            <input type="submit" class="btn-primary" value="Add To Cart">
+                        </div>
+                    </form>
+                </div>
+                <div class="food-menu-box">
+                    <form action="">
+                        <div class="food-menu-img">
+                            <img src="img/food/s1.jpg" alt="" class="img-responsive img-curve">
+                        </div>
+                        <div class="food-menu-desc">
+                            <h4>Sandwich</h4>
+                            <p class="food-price">$8.00</p>
+                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <input type="number" value="1" min="1">
+                            <input type="submit" class="btn-primary" value="Add To Cart">
+                        </div>
+                    </form>
+                </div>
+                <div class="food-menu-box">
+                    <form action="">
+                        <div class="food-menu-img">
+                            <img src="img/food/b1.jpg" alt="" class="img-responsive img-curve">
+                        </div>
+                        <div class="food-menu-desc">
+                            <h4>Burger</h4>
+                            <p class="food-price">$8.00</p>
+                            <p class="food-details">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus excepturi porro.</p>
+                            <input type="number" value="1" min="1">
+                            <input type="submit" class="btn-primary" value="Add To Cart">
+                        </div>
+                    </form>
+                </div>
                 <div class="food-menu-box">
                     <form action="">
                         <div class="food-menu-img">

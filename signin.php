@@ -36,11 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email2']) && isset($_P
             $user = $result->fetch_assoc();
             
             // Verify hashed password
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['email'] = $email;
-                $_SESSION['success'] = "You are now logged in";
-                header("Location: index.php"); // Redirect to home page
-                exit();
+            // Store email and name in session after successful login
+if (password_verify($password, $user['password'])) {
+    $_SESSION['email'] = $email;
+    $_SESSION['name'] = $user['name']; // Store the user's name in session
+    $_SESSION['success'] = "You are now logged in";
+    header("Location: index.php");
+    exit();
+}
+
             } else {
                 array_push($errors, "Wrong email/password combination");
             }
@@ -57,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email2']) && isset($_P
         header("Location: login.php");
         exit();
     }
-}
+
 
 $conn->close();
 ?>

@@ -1,5 +1,9 @@
 <?php 
 include('Take_order.php');
+session_start(); // Start the session
+$isLoggedIn = isset($_SESSION['email']); // Check if user is logged in
+$username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +40,12 @@ include('Take_order.php');
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
-                        <li><a class="hvr-underline-from-center" href="login.php">Register</a></li>
+                        <?php if ($isLoggedIn): ?>
+        <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
+        <li><a href="logout.php">Logout</a></li>
+    <?php else: ?>
+        <li><a href="login.php">Login</a></li>
+    <?php endif; ?>
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
