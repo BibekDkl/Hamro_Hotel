@@ -1,3 +1,10 @@
+<?php 
+session_start(); // Start the session
+$isLoggedIn = isset($_SESSION['email']); // Check if user is logged in
+$username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +20,6 @@
     <link rel="stylesheet" href="css/hover-min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login.css">
-
 </head>
 <body>
     <!-- Navigation Section Start -->
@@ -35,7 +40,12 @@
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.html">Order</a></li>
                         <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
-                        <li><a class="hvr-underline-from-center" href="login.html">Login</a></li>
+                        <?php if ($isLoggedIn): ?>
+        <li><a href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
+        <li><a href="logout.php">Logout</a></li>
+    <?php else: ?>
+        <li><a href="login.php">Login</a></li>
+    <?php endif; ?>
                         <li>
                             <a id="shopping-cart" class="shopping-cart">
                                 <i class="fa fa-cart-arrow-down"></i>
@@ -92,81 +102,39 @@
     </header>
     <!-- Navigation Section End -->
 
-    <!-- Login Section Start -->
-    <!-- <section class="login">
+    <!-- Contact Section Start -->
+    <section class="contact">
         <div class="container">
-            <h2 class="text-center">Login Here</h2>
+            <h2 class="text-center">Get in touch</h2>
             <div class="heading-border"></div>
 
-            <form action="" class="form">
+            <form action="process_contact.php" method="POST" class="form">
                 <fieldset>
-                    <legend>Login</legend>
+                    <legend>Contact Us</legend>
+                    <p class="label">Full Name</p>
+                    <input type="text" name = "full_name" placeholder="Enter your name..." required>
                     <p class="label">Email</p>
-                    <input type="email" placeholder="Enter your email..." required>
-                    <p class="label">Password</p>
-                    <input type="password" placeholder="Enter your password..." required>
-                    <input type="submit" value="Login" class="btn-primary">
+                    <input type="email" name = "email" placeholder="Enter your email..." required>
+                    <p class="label">Phone Number</p>
+                    <input type="tel" name = "phone" placeholder="Enter your phone..." required>
+                    <p class="label">Subject</p>
+                    <input type="text" name = "subject" placeholder="Enter your subject..." required>
+                    <p class="label">Message</p>
+                    <textarea rows="5" name = "message" placeholder="Enter your message..." required></textarea>
+                    <input type="submit" value="Submit" class="btn-primary">
                 </fieldset>
-            </form>
         </div>
-    </section> -->
-    <!-- Login Section End -->
+    </section>
+    <!-- Contact Section End -->
 
-    <div class="container" id="container">  
-        <div class="form-container sign-up">    <!--Sign up form-->
-            <form>
-                <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registeration</span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button>Sign Up</button>
-            </form>
-        </div>
+     <!-- Map Section Start -->
+     <section class="map">
+        <h2 class="text-center">Find Us</h2>
+        <div class="heading-border"></div>
 
-<!--Sign in form-->
-        <div class="form-container sign-in">        
-            <form>
-                <h1>Sign In</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <a href="#">Forget Your Password?</a>
-                <button>Sign In</button>
-            </form>
-        </div>
-
-    
-<!-- Toggle Panels -->
-<div class="toggle-container">
-    <div class="toggle">
-        <div class="toggle-panel toggle-left">
-            <h1 id="left-panel-text">Welcome Back!</h1>
-            <p id="left-panel-desc">Login to enjoy delicious deliveries at your doorstep!</p>
-            <button class="hidden" id="login">Sign In</button>
-        </div>
-        <div class="toggle-panel toggle-right">
-            <h1>Hello, Foodie!</h1>
-            <p>Sign up to satisfy your cravings with Foodie Fly!</p>
-            <button class="hidden" id="register">Sign Up</button>
-        </div>
-    </div>
-</div>
-
-
-    <script src="script.js"></script>
+        <iframe id="gmap_canvas" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3771.4142262737837!2d85.324564!3d27.709524!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1908ed7fbacd%3A0x49b04b284da7a96f!2sIIMS%20College!5e1!3m2!1sen!2sus!4v1739801436907!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+     </section>
+     <!-- Map Section End -->
 
     <!-- Footer Section Start -->
     <section class="footer">
@@ -174,7 +142,9 @@
             <div class="grid-3">
                 <div class="text-center">
                     <h3>About Us</h3><br>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat officia, temporibus expedita dicta eligendi harum architecto fugiat sint, laudantium omnis animi. Voluptas praesentium maiores minima pariatur necessitatibus consequuntur, similique assumenda.</p>
+                    <p>Foodie Fly is a fast and reliable food delivery service connecting you with top restaurants for a seamless dining experience. 
+                        With a diverse menu, real-time tracking, and swift deliveries, we ensure your favorite meals arrive fresh and on time. 
+                        Enjoy convenience at your fingertips—because great food should never wait! </p>
                 </div>
                 <div class="texr-center">
                     <h3>Site Map</h3><br>

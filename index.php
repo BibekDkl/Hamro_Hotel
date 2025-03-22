@@ -37,7 +37,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's email (
                         <li><a class="hvr-underline-from-center" href="categories.html">Categories</a></li>
                         <li><a class="hvr-underline-from-center" href="foods.html">Foods</a></li>
                         <li><a class="hvr-underline-from-center" href="order.php">Order</a></li>
-                        <li><a class="hvr-underline-from-center" href="contact.html">Contact</a></li>
+                        <li><a class="hvr-underline-from-center" href="contact.php">Contact</a></li>
                         <?php if ($isLoggedIn): ?>
                             <li><a class="hvr-underline-from-center" href="#">Welcome, <?php echo htmlspecialchars($username); ?></a></li>
                             <li><a class="hvr-underline-from-center" href="logout.php">Logout</a></li>

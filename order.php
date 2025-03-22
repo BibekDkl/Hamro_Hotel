@@ -159,7 +159,7 @@ $username = $isLoggedIn ? $_SESSION['name'] : ''; // Retrieve the user's name
                     <input type="text" name="email" id ="email" placeholder="Enter your email..." required>
                     <p class="label">Address</p>
                     <input type="text"name="address" id ="address" placeholder="Enter your address..." required>
-                    <button type= "submit" >Conform Order</button>
+                    <button type= "submit" class="btn-primary" >Conform Order</button>
                 </fieldset>
             </form>
         </div>

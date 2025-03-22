@@ -72,6 +72,8 @@ $(document).ready(function () {
   // Handle "Add to Cart" button click
   $('.food-menu-box form').on('submit', function (e) {
     e.preventDefault(); // Prevent form submission
+    e.stopPropagation(); // Stop event bubbling
+
     const form = $(this);
     const foodName = form.find('h4').text();
     const foodPrice = parseFloat(form.find('.food-price').text().replace('$', ''));
@@ -81,7 +83,7 @@ $(document).ready(function () {
     // Validate quantity
     if (isNaN(foodQuantity) || foodQuantity <= 0) {
       alert("Please enter a valid quantity.");
-      return;
+      return false; // Prevent further action
     }
 
     // Check if the item already exists in the cart
@@ -102,6 +104,8 @@ $(document).ready(function () {
     saveCart();
     updateCartBadge();
     updateCartContent();
+
+    return false; // Ensure no page refresh
   });
 
   // Handle delete item from cart
